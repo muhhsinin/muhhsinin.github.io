@@ -16,11 +16,8 @@
     <br/>
     <div class="row align-items-center">
         <div class="input-group col-md-8 offset-md-2">
-            <input class="form-control" list="surahs" name="selectedSurah" placeholder="Enter Surah Name"/>
-            <datalist id="surahs">
-                <option value="1. Al-Fatiha (سورة الفاتحة)">
-                <option value="2. Al-Baqara (سورة البقرة)">
-                <option value="3. Aal-i-Imraan (سورة آل عمران)">
+            <input class="form-control" list="surahList" name="selectedSurah" placeholder="Enter Surah Name"/>
+            <datalist id="surahList">
             </datalist>
             <span class="input-group-btn">
                 <button class="btn btn-secondary" type="button">Go!</button>
@@ -28,8 +25,9 @@
         </div>
     </div>
 </div>
-<script src="js/jquery-3.1.1.min.js"></script>
-<script src="js/tether.min.js"></script>
-<script src="js/bootstrap.js"></script>
+<script src="js/libs/jquery-3.1.1.min.js"></script>
+<script src="js/libs/tether.min.js"></script>
+<script src="js/libs/bootstrap.js"></script>
+<script src="js/surah.list.generator.js"></script>
 </body>
 </html>
