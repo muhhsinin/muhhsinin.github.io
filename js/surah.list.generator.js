@@ -5,19 +5,25 @@
     "use strict";
     const surahListUrl = 'resources/surah.list.json';
     const surahListNodeId = 'surahList';
-    var surahList = [];
 
     function grabSurahList() {
         $.ajax({
             method: 'GET',
             url: surahListUrl
         }).done(function (output) {
-            surahList = output;
-            console.log(surahList);
+            surahList = generateSurahInfos(output);
             generateSurahListHtml();
         }).fail(function (output) {
             console.log('Fail to retrieve surah list');
         });
+    }
+
+    function generateSurahInfos(jsonData) {
+        var temp = [];
+        jsonData.forEach(function (element) {
+            temp.push(new SurahInfo(element));
+        });
+        return temp;
     }
 
     function generateSurahListHtml() {
@@ -31,8 +37,7 @@
     }
 
     function generateOptionTagFromSurah(surah) {
-        var output = '<option value="' + surah["number"] + '. ' +
-            surah["englishName"] + ' (' + surah["name"] + ')">';
+        var output = '<option value="' + surah.getDisplayName() + '">';
         return output;
     }
 
