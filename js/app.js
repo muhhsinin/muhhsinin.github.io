@@ -10,20 +10,23 @@
 
     function initActionListener() {
         surahSelectionButton = document.getElementById(surahSelectionNode);
-        surahSelectionButton.classList.add('disabled');
+        surahSelectionButton.disabled = true;
         surahInput = document.getElementById(selectedSurahNode);
         surahSelectionButton.addEventListener('click', surahSelected);
         surahInput.addEventListener('input', checkForActivatingButton)
     }
 
     function surahSelected() {
-        console.log(surahInput.value);
-        console.log("Surah Selected");
+        var surah = DataManager.findSurahByDisplayName(surahInput.value);
+        console.log(surah);
+        console.log(surah.toString());
     }
 
     function checkForActivatingButton() {
         var valueAtInputField = surahInput.value;
-        console.log(valueAtInputField);
+        surahSelectionButton.disabled = true;
+        if (DataManager.isSurahExistByDisplayName(valueAtInputField))
+            surahSelectionButton.disabled = false;
     }
 
     document.addEventListener('DOMContentLoaded', function () {

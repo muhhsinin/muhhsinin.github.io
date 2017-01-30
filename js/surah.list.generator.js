@@ -11,7 +11,7 @@
             method: 'GET',
             url: surahListUrl
         }).done(function (output) {
-            surahList = generateSurahInfos(output);
+            DataManager.surahList = generateSurahInfos(output);
             generateSurahListHtml();
         }).fail(function (output) {
             console.log('Fail to retrieve surah list');
@@ -28,7 +28,7 @@
 
     function generateSurahListHtml() {
         var htmlContent = '';
-        surahList.forEach(function (element) {
+        DataManager.surahList.forEach(function (element) {
             htmlContent += generateOptionTagFromSurah(element);
         });
 
