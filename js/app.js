@@ -3,65 +3,49 @@
  */
 (function () {
     "use strict";
-    var surahSelectionId = 'surahSelectionButton';
-    var selectedSurahId = 'selectedSurah';
-    var startingAyatId = 'startingAyat';
-    var endingAyatId = 'endingAyat';
-    var ayatAreaId = 'ayatArea';
-    var startingAyatNode = null;
-    var endingAyatNode = null;
-    var ayatAreaNode = null;
-    var surahInput = null;
-    var surahSelectionButton = null;
+    var viewManager = null;
     var surah = null;
     var startingAyat = 0;
     var endingAyat = 0;
     var ayats = [];
 
-    function initActionListener() {
-        surahSelectionButton = document.getElementById(surahSelectionId);
-        surahInput = document.getElementById(selectedSurahId);
-        startingAyatNode = document.getElementById(startingAyatId);
-        endingAyatNode = document.getElementById(endingAyatId);
-        ayatAreaNode = document.getElementById(ayatAreaId);
-        surahSelectionButton.disabled = true;
-        surahInput.addEventListener('input', checkForActivatingButton);
-        surahSelectionButton.addEventListener('click', surahSelected);
-        startingAyatNode.addEventListener('input', populateEndingAyatDropDown);
-        endingAyatNode.addEventListener('input', finalProcessing);
+    function initialize() {
+        viewManager = new ViewManager();
+        viewManager.initialize();
+        viewManager.getSelectedSurahNode().addEventListener('input', checkForActivatingButton);
+        viewManager.getStartingAyatNode().addEventListener('input', populateEndingAyatDropDown);
+        viewManager.getEndingAyatNode().addEventListener('input', finalProcessing);
     }
 
     function checkForActivatingButton() {
-        var valueAtInputField = surahInput.value;
-        surahSelectionButton.disabled = true;
-        if (DataManager.isSurahExistByDisplayName(valueAtInputField)) {
-            surahSelectionButton.disabled = false;
+        if (DataManager.isSurahExistByDisplayName(viewManager.getSelectedSurah())) {
             surahSelected();
         }
     }
 
     function surahSelected() {
-        surah = DataManager.findSurahByDisplayName(surahInput.value);
+        surah = DataManager.findSurahByDisplayName(viewManager.getSelectedSurah());
         populateStartingAyatDropDown();
     }
 
     function populateStartingAyatDropDown() {
-        var optionNode = '';
-        for (var i = 1; i <= surah.numberOfAyat; i++)
-            optionNode += '<option>' + i + '</option>';
-        startingAyatNode.innerHTML = optionNode;
+        viewManager.setContentAtStartingAyat(generateOptions(1, surah.numberOfAyat));
     }
 
     function populateEndingAyatDropDown() {
-        startingAyat = parseInt(startingAyatNode.value);
-        var optionNodeHtml = '';
-        for (var i = startingAyat + 1; i <= surah.numberOfAyat; i++)
-            optionNodeHtml += '<option>' + i + '</option>';
-        endingAyatNode.innerHTML = optionNodeHtml;
+        var htmlContent = generateOptions(viewManager.getStartingAyat(), surah.numberOfAyat);
+        viewManager.setContentAtEndingAyat(htmlContent);
+    }
+
+    function generateOptions(start, end) {
+        var optionHtml = '';
+        for (var i = start; i <= end; i++)
+            optionHtml += '<option>' + i + '</option>';
+        return optionHtml;
     }
 
     function finalProcessing() {
-        endingAyat = parseInt(endingAyatNode.value);
+        endingAyat = viewManager.getEndingAyat();
         var surahId = convertTo3Digit(surah.number);
         var endPoints = [];
         for (var i = startingAyat; i <= endingAyat; i++) {
@@ -89,7 +73,7 @@
         ayats.forEach(function (ayat) {
             ayatHtmlContent += '<p>' + ayat['arabic'] + '</p>';
         });
-        ayatAreaNode.innerHTML = ayatHtmlContent;
+        viewManager.setContentAtAyatArea(ayatHtmlContent);
     }
 
     function convertTo3Digit(number) {
@@ -102,6 +86,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        initActionListener();
+        initialize();
     });
 }());
