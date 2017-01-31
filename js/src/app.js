@@ -1,8 +1,14 @@
 /**
  * Created by kawnayeen on 1/29/17.
  */
+import DataManager from "./data.manager";
+import ViewManager from "./view.manager";
+import SurahListGenerator from "./surah.list.generator";
+
 (function () {
     "use strict";
+    var surahListGenerator = null;
+    var dataManager = null;
     var viewManager = null;
     var surah = null;
     var startingAyat = 0;
@@ -18,13 +24,13 @@
     }
 
     function checkForActivatingButton() {
-        if (DataManager.isSurahExistByDisplayName(viewManager.getSelectedSurah())) {
+        if (dataManager.isSurahExistByDisplayName(viewManager.getSelectedSurah())) {
             surahSelected();
         }
     }
 
     function surahSelected() {
-        surah = DataManager.findSurahByDisplayName(viewManager.getSelectedSurah());
+        surah = dataManager.findSurahByDisplayName(viewManager.getSelectedSurah());
         populateStartingAyatDropDown();
         populateEndingAyatDropDown();
     }
@@ -88,7 +94,22 @@
             return '' + number;
     }
 
+    function generate() {
+        $.ajax({
+            method: 'GET',
+            url: 'resources/surah.list.json'
+        }).done(function (output) {
+            dataManager.setSurahList(surahListGenerator.generateSurahInfos(output));
+            surahListGenerator.generateSurahListHtml();
+        }).fail(function (output) {
+            console.log('Fail to retrieve surah list');
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        dataManager = new DataManager();
+        surahListGenerator = new SurahListGenerator(dataManager);
+        generate();
         initialize();
     });
 }());

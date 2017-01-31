@@ -1,3 +1,4 @@
 .idea
 muhhsinin.iml
-scrapper.js
+js/src/scrapper.js
+node_modules
