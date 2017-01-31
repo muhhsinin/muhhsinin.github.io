@@ -26,6 +26,7 @@
     function surahSelected() {
         surah = DataManager.findSurahByDisplayName(viewManager.getSelectedSurah());
         populateStartingAyatDropDown();
+        populateEndingAyatDropDown();
     }
 
     function populateStartingAyatDropDown() {
@@ -45,6 +46,8 @@
     }
 
     function finalProcessing() {
+        ayats = [];
+        startingAyat = viewManager.getStartingAyat();
         endingAyat = viewManager.getEndingAyat();
         var surahId = convertTo3Digit(surah.number);
         var endPoints = [];
