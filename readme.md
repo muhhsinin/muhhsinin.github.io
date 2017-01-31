@@ -3,6 +3,29 @@ Muhhsinin
 
 This project is the natural successor of [muhhsinin blog](http://muhhsinin.blogspot.com)
 
+How to Run
+-----------
+
+External Dependencies
+
+- Node v6.9.4
+
+Open terminal in the project directory and run the following command to 
+```
+npm install
+```
+
+Give executable permission to ```build.sh``` file by using the following command
+```
+chomd +x build.sh
+```
+
+Finally run the following to build
+
+```
+./build.sh
+```
+
 
 Contributor
 -----------
