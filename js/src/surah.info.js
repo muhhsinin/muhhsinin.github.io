@@ -5,10 +5,10 @@
 
 export default class SurahInfo {
     constructor(info) {
-        this.number = info['number'];
-        this.name = info['name'];
-        this.englishName = info['englishName'];
-        this.numberOfAyat = info['numberOfAyahs'];
+        this.number = info.number;
+        this.name = info.name;
+        this.englishName = info.englishName;
+        this.numberOfAyat = info.numberOfAyahs;
         this.displayName = '';
         this.generateDisplayName();
     }

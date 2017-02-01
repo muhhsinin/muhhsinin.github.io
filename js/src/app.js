@@ -64,21 +64,20 @@ import SurahListGenerator from "./surah.list.generator";
     }
 
     function getAyats(endPoints) {
-        endPoints.forEach(function (ayatUri) {
-            $.ajax({
-                method: 'GET',
-                url: ayatUri
-            }).done(data => {
-                ayats.push(data);
-                pushAyat();
-            }).fail(err => console.log('Fail to retrieve ayat'));
+        endPoints.forEach(ayatUri => {
+            fetch(ayatUri)
+                .then(r => r.json())
+                .then(r => {
+                    ayats.push(r);
+                    pushAyat();
+                });
         });
     }
 
     function pushAyat() {
         let ayatHtmlContent = ``;
         ayats.forEach(function (ayat) {
-            ayatHtmlContent += `<p>${ayat['arabic']}</p>`;
+            ayatHtmlContent += `<p>${ayat.arabic}</p>`;
         });
         viewManager.setContentAtAyatArea(ayatHtmlContent);
     }

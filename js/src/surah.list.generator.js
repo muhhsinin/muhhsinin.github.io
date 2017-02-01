@@ -8,16 +8,16 @@ export default class SurahListGenerator {
     constructor(dataManager) {
         this.dataManager = dataManager;
         this.surahListNodeId = 'surahList';
+        this.surahListUri = 'resources/surah.list.json';
     }
 
     generate(){
-        $.ajax({
-            method: 'GET',
-            url: 'resources/surah.list.json'
-        }).done(data => {
-            this.dataManager.setSurahList(this.generateSurahInfos(data));
-            this.generateSurahListHtml();
-        }).fail(err => console.log('Fail to retrieve surah list'));
+        fetch(this.surahListUri)
+            .then(r=>r.json())
+            .then(json=>{
+                this.dataManager.setSurahList(this.generateSurahInfos(json));
+                this.generateSurahListHtml();
+            });
     }
 
     generateSurahInfos(jsonData) {
