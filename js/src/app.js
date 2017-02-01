@@ -7,13 +7,13 @@ import SurahListGenerator from "./surah.list.generator";
 
 (function () {
     "use strict";
-    var surahListGenerator = null;
-    var dataManager = null;
-    var viewManager = null;
-    var surah = null;
-    var startingAyat = 0;
-    var endingAyat = 0;
-    var ayats = [];
+    let surahListGenerator = null;
+    let dataManager = null;
+    let viewManager = null;
+    let surah = null;
+    let startingAyat = 0;
+    let endingAyat = 0;
+    let ayats = [];
 
     function initialize() {
         viewManager = new ViewManager();
@@ -45,9 +45,9 @@ import SurahListGenerator from "./surah.list.generator";
     }
 
     function generateOptions(start, end) {
-        var optionHtml = '';
-        for (var i = start; i <= end; i++)
-            optionHtml += '<option>' + i + '</option>';
+        let optionHtml = ``;
+        for (let i = start; i <= end; i++)
+            optionHtml += `<option>${i}</option>`;
         return optionHtml;
     }
 
@@ -55,9 +55,9 @@ import SurahListGenerator from "./surah.list.generator";
         ayats = [];
         startingAyat = viewManager.getStartingAyat();
         endingAyat = viewManager.getEndingAyat();
-        var surahId = convertTo3Digit(surah.number);
-        var endPoints = [];
-        for (var i = startingAyat; i <= endingAyat; i++) {
+        let surahId = convertTo3Digit(surah.number);
+        let endPoints = [];
+        for (let i = startingAyat; i <= endingAyat; i++) {
             endPoints.push('resources/ayat/' + surahId + '/' + surahId + convertTo3Digit(i) + '.json');
         }
         getAyats(endPoints);
@@ -68,48 +68,34 @@ import SurahListGenerator from "./surah.list.generator";
             $.ajax({
                 method: 'GET',
                 url: ayatUri
-            }).done(function (output) {
-                ayats.push(output);
+            }).done(data => {
+                ayats.push(data);
                 pushAyat();
-            }).fail(function (output) {
-                console.log('Fail to retrieve surah list');
-            });
+            }).fail(err => console.log('Fail to retrieve ayat'));
         });
     }
 
     function pushAyat() {
-        var ayatHtmlContent = '';
+        let ayatHtmlContent = ``;
         ayats.forEach(function (ayat) {
-            ayatHtmlContent += '<p>' + ayat['arabic'] + '</p>';
+            ayatHtmlContent += `<p>${ayat['arabic']}</p>`;
         });
         viewManager.setContentAtAyatArea(ayatHtmlContent);
     }
 
     function convertTo3Digit(number) {
-        if (number < 10) {
-            return '00' + number;
-        } else if (number < 100)
-            return '0' + number;
+        if (number < 10)
+            return `00${number}`;
+        else if (number < 100)
+            return `0${number}`;
         else
-            return '' + number;
-    }
-
-    function generate() {
-        $.ajax({
-            method: 'GET',
-            url: 'resources/surah.list.json'
-        }).done(function (output) {
-            dataManager.setSurahList(surahListGenerator.generateSurahInfos(output));
-            surahListGenerator.generateSurahListHtml();
-        }).fail(function (output) {
-            console.log('Fail to retrieve surah list');
-        });
+            return number.toString();
     }
 
     document.addEventListener('DOMContentLoaded', function () {
         dataManager = new DataManager();
         surahListGenerator = new SurahListGenerator(dataManager);
-        generate();
+        surahListGenerator.generate();
         initialize();
     });
 }());

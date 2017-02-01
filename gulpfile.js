@@ -10,7 +10,7 @@
     var uglify = require('gulp-uglify');
     var buffer = require('vinyl-buffer');
 
-    gulp.task('js', function () {
+    gulp.task('js', () => {
         browserify('./js/src/app.js')
             .transform(babelify.configure({presets: ["es2015"]}))
             .bundle()
@@ -20,7 +20,9 @@
             .pipe(gulp.dest('./js/build'));
     });
 
-    gulp.task('default', ['js'], function () {
-
-    });
+    gulp.task(
+        'default',
+        ['js'],
+        () => gulp.watch('./js/src/app.js', ['js'])
+    );
 }());

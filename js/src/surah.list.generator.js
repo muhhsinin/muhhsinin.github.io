@@ -10,21 +10,31 @@ export default class SurahListGenerator {
         this.surahListNodeId = 'surahList';
     }
 
+    generate(){
+        $.ajax({
+            method: 'GET',
+            url: 'resources/surah.list.json'
+        }).done(data => {
+            this.dataManager.setSurahList(this.generateSurahInfos(data));
+            this.generateSurahListHtml();
+        }).fail(err => console.log('Fail to retrieve surah list'));
+    }
+
     generateSurahInfos(jsonData) {
-        var temp = [];
+        let temp = [];
         jsonData.forEach(element => temp.push(new SurahInfo(element)));
         return temp;
     }
 
     generateSurahListHtml() {
-        var htmlContent = '';
+        let htmlContent = '';
         this.dataManager.getSurahList().forEach(surah => htmlContent += this.generateOptionTagFromSurah(surah));
-        var surahListNode = document.getElementById(this.surahListNodeId);
+        let surahListNode = document.getElementById(this.surahListNodeId);
         surahListNode.innerHTML = htmlContent;
     }
 
     generateOptionTagFromSurah(surah) {
-        let output = '<option value="' + surah.getDisplayName() + '">';
+        let output = `<option value="${surah.getDisplayName()}">`;
         return output;
     }
 }

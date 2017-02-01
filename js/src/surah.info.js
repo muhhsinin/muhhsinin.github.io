@@ -14,8 +14,7 @@ export default class SurahInfo {
     }
 
     generateDisplayName() {
-        this.displayName = this.number + '. ' +
-            this.englishName + ' (' + this.name + ')';
+        this.displayName = `${this.number}. ${this.englishName} (${this.name})`;
     }
 
     getDisplayName() {
