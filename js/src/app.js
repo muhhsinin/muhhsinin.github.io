@@ -4,26 +4,35 @@
 import DataManager from "./data.manager";
 import ViewManager from "./view.manager";
 import SurahListGenerator from "./surah.list.generator";
+import Util from "./util";
 
 (function () {
     "use strict";
     let surahListGenerator = null;
     let dataManager = null;
     let viewManager = null;
+    let util = null;
     let surah = null;
     let startingAyat = 0;
     let endingAyat = 0;
     let ayats = [];
 
     function initialize() {
+        dataManager = new DataManager();
+        surahListGenerator = new SurahListGenerator(dataManager);
         viewManager = new ViewManager();
+        util = new Util();
+        surahListGenerator.generate();
         viewManager.initialize();
-        viewManager.getSelectedSurahNode().addEventListener('input', checkForActivatingButton);
+    }
+
+    function addEventListeners() {
+        viewManager.getSelectedSurahNode().addEventListener('input', checkValidSurahName);
         viewManager.getStartingAyatNode().addEventListener('input', populateEndingAyatDropDown);
         viewManager.getEndingAyatNode().addEventListener('input', finalProcessing);
     }
 
-    function checkForActivatingButton() {
+    function checkValidSurahName() {
         if (dataManager.isSurahExistByDisplayName(viewManager.getSelectedSurah())) {
             surahSelected();
         }
@@ -55,10 +64,10 @@ import SurahListGenerator from "./surah.list.generator";
         ayats = [];
         startingAyat = viewManager.getStartingAyat();
         endingAyat = viewManager.getEndingAyat();
-        let surahId = convertTo3Digit(surah.number);
+        let surahId = util.to3digitString(surah.number);
         let endPoints = [];
         for (let i = startingAyat; i <= endingAyat; i++) {
-            endPoints.push('resources/ayat/' + surahId + '/' + surahId + convertTo3Digit(i) + '.json');
+            endPoints.push('resources/ayat/' + surahId + '/' + surahId + util.to3digitString(i) + '.json');
         }
         getAyats(endPoints);
     }
@@ -76,25 +85,12 @@ import SurahListGenerator from "./surah.list.generator";
 
     function pushAyat() {
         let ayatHtmlContent = ``;
-        ayats.forEach(function (ayat) {
-            ayatHtmlContent += `<p>${ayat.arabic}</p>`;
-        });
+        ayats.forEach(ayat => ayatHtmlContent += `<p>${ayat.arabic}</p>`);
         viewManager.setContentAtAyatArea(ayatHtmlContent);
     }
 
-    function convertTo3Digit(number) {
-        if (number < 10)
-            return `00${number}`;
-        else if (number < 100)
-            return `0${number}`;
-        else
-            return number.toString();
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
-        dataManager = new DataManager();
-        surahListGenerator = new SurahListGenerator(dataManager);
-        surahListGenerator.generate();
         initialize();
+        addEventListeners();
     });
 }());
