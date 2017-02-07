@@ -11,7 +11,7 @@
     const buffer = require('vinyl-buffer');
     const mocha = require('gulp-mocha');
 
-    gulp.task('js', () => {
+    gulp.task('js',['test'], () => {
         browserify('./js/src/app.js')
             .transform(babelify.configure({presets: ["es2015"]}))
             .bundle()
@@ -22,13 +22,13 @@
     });
 
     gulp.task('test', () => {
-        gulp.src('./js/src/test*.js', {read: false})
+        return gulp.src('./js/src/test*.js', {read: false})
             .pipe(mocha({reporter: 'spec'}));
     });
 
     gulp.task(
         'default',
-        ['test', 'js'],
-        () => gulp.watch('./js/src/app.js', ['js', 'test'])
+        ['js'],
+        () => gulp.watch('./js/src/app.js', ['js'])
     );
 }());
