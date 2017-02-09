@@ -5,6 +5,7 @@ import DataManager from "./data.manager";
 import ViewManager from "./view.manager";
 import SurahListGenerator from "./surah.list.generator";
 import Util from "./util";
+import AyatService from "./ayat.service";
 
 (function () {
     "use strict";
@@ -61,15 +62,25 @@ import Util from "./util";
     }
 
     function finalProcessing() {
-        ayats = [];
-        startingAyat = viewManager.getStartingAyat();
-        endingAyat = viewManager.getEndingAyat();
-        let surahId = util.to3digitString(surah.number);
-        let endPoints = [];
-        for (let i = startingAyat; i <= endingAyat; i++) {
-            endPoints.push('resources/ayat/' + surahId + '/' + surahId + util.to3digitString(i) + '.json');
-        }
-        getAyats(endPoints);
+        // ayats = [];
+        // startingAyat = viewManager.getStartingAyat();
+        // endingAyat = viewManager.getEndingAyat();
+        // let surahId = util.to3digitString(surah.number);
+        // let endPoints = [];
+        // for (let i = startingAyat; i <= endingAyat; i++) {
+        //     endPoints.push('resources/ayat/' + surahId + '/' + surahId + util.to3digitString(i) + '.json');
+        // }
+        // getAyats(endPoints);
+
+
+        let surahNumber = surah.number;
+        let startingAyat = viewManager.getStartingAyat();
+        let endingAyat = viewManager.getEndingAyat();
+        let ayatService = new AyatService();
+        let ayatFetchingTask = ayatService.getAyat(surahNumber, startingAyat);
+        ayatFetchingTask.then(x => {
+            viewManager.setContentAtAyatArea(`<p>${x.arabic}</p>`);
+        });
     }
 
     function getAyats(endPoints) {
