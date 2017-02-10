@@ -14,9 +14,6 @@ import AyatService from "./ayat.service";
     let viewManager = null;
     let util = null;
     let surah = null;
-    let startingAyat = 0;
-    let endingAyat = 0;
-    let ayats = [];
 
     function initialize() {
         dataManager = new DataManager();
@@ -62,42 +59,17 @@ import AyatService from "./ayat.service";
     }
 
     function finalProcessing() {
-        // ayats = [];
-        // startingAyat = viewManager.getStartingAyat();
-        // endingAyat = viewManager.getEndingAyat();
-        // let surahId = util.to3digitString(surah.number);
-        // let endPoints = [];
-        // for (let i = startingAyat; i <= endingAyat; i++) {
-        //     endPoints.push('resources/ayat/' + surahId + '/' + surahId + util.to3digitString(i) + '.json');
-        // }
-        // getAyats(endPoints);
-
-
         let surahNumber = surah.number;
         let startingAyat = viewManager.getStartingAyat();
         let endingAyat = viewManager.getEndingAyat();
         let ayatService = new AyatService();
-        let ayatFetchingTask = ayatService.getAyat(surahNumber, startingAyat);
+        let ayatFetchingTask = ayatService.getAyats(surahNumber, startingAyat, endingAyat);
+
         ayatFetchingTask.then(x => {
-            viewManager.setContentAtAyatArea(`<p>${x.arabic}</p>`);
+            let ayatHtmlContent = ``;
+            x.forEach(ayat => ayatHtmlContent += `<p>${ayat.arabic}</p>`);
+            viewManager.setContentAtAyatArea(ayatHtmlContent);
         });
-    }
-
-    function getAyats(endPoints) {
-        endPoints.forEach(ayatUri => {
-            fetch(ayatUri)
-                .then(r => r.json())
-                .then(r => {
-                    ayats.push(r);
-                    pushAyat();
-                });
-        });
-    }
-
-    function pushAyat() {
-        let ayatHtmlContent = ``;
-        ayats.forEach(ayat => ayatHtmlContent += `<p>${ayat.arabic}</p>`);
-        viewManager.setContentAtAyatArea(ayatHtmlContent);
     }
 
     document.addEventListener('DOMContentLoaded', function () {

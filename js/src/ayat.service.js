@@ -17,8 +17,7 @@ export default class AyatService {
         let ayatFetchingTask = new Promise((resolve, reject) => {
                 fetch(ayatUri)
                     .then(r => r.json())
-                    .then(r => resolve(r))
-                    .catch(reject('Ayat Not Found '+ayatUri));
+                    .then(r => resolve(r));
             }
         );
         return ayatFetchingTask;
@@ -33,13 +32,7 @@ export default class AyatService {
         allFetchingTasks.forEach(task => task.then(ayat => ayats.push(ayat)));
 
         let awesomePromise = new Promise((resolve, reject) => {
-
-            window.setTimeout(()=>resolve(ayats),3000);
-            // do {
-            //
-            // } while (allFetchingTasks.length !== ayats.length);
-            // resolve(ayats);
-            //allFetchingTasks[0].then(ayat=>{ayats.push(ayat)})
+            window.setTimeout(()=>resolve(ayats),1500);
         });
 
         return awesomePromise;
