@@ -67,7 +67,7 @@ import AyatService from "./ayat.service";
 
         ayatFetchingTask.then(x => {
             let ayatHtmlContent = ``;
-            x.forEach(ayat => ayatHtmlContent += `<p>${ayat.arabic}</p>`);
+            x.forEach(ayat => ayatHtmlContent += `<p>${ayat.id} # ${ayat.arabic}</p>`);
             viewManager.setContentAtAyatArea(ayatHtmlContent);
         });
     }

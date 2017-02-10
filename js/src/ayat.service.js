@@ -32,7 +32,10 @@ export default class AyatService {
         allFetchingTasks.forEach(task => task.then(ayat => ayats.push(ayat)));
 
         let awesomePromise = new Promise((resolve, reject) => {
-            window.setTimeout(()=>resolve(ayats),1500);
+            window.setTimeout(()=>{
+                ayats.sort((a,b)=>a.id-b.id);
+                resolve(ayats);
+            },1500);
         });
 
         return awesomePromise;
