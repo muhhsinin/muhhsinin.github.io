@@ -4,6 +4,7 @@
 "use strict";
 
 import Util from "./util";
+import AyatInfo from "./ayat.info";
 
 export default class AyatService {
     constructor() {
@@ -14,10 +15,16 @@ export default class AyatService {
         let surahId = this.util.to3digitString(surahNumber);
         let ayatId = this.util.to3digitString(ayatNumber);
         let ayatUri = `resources/ayat/${surahId}/${surahId}${ayatId}.json`;
+        let ayatInfo = new AyatInfo(surahId, ayatId);
         let ayatFetchingTask = new Promise((resolve, reject) => {
                 fetch(ayatUri)
                     .then(r => r.json())
-                    .then(r => resolve(r));
+                    .then(r => {
+                        ayatInfo.setArabicText(r.arabic);
+                        ayatInfo.setEnglishTranslation(r.english);
+                        ayatInfo.setAyatSerial(r.id);
+                    })
+                    .then(resolve(ayatInfo));
             }
         );
         return ayatFetchingTask;
@@ -32,10 +39,10 @@ export default class AyatService {
         allFetchingTasks.forEach(task => task.then(ayat => ayats.push(ayat)));
 
         let awesomePromise = new Promise((resolve, reject) => {
-            window.setTimeout(()=>{
-                ayats.sort((a,b)=>a.id-b.id);
+            window.setTimeout(() => {
+                ayats.sort((a, b) => a.getAyatSerial() - b.getAyatSerial());
                 resolve(ayats);
-            },1500);
+            }, 1500);
         });
 
         return awesomePromise;
