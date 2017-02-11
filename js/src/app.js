@@ -58,6 +58,9 @@ import AyatService from "./ayat.service";
         return optionHtml;
     }
 
+    let index = 0;
+    let ayats = null;
+
     function finalProcessing() {
         let surahNumber = surah.number;
         let startingAyat = viewManager.getStartingAyat();
@@ -66,10 +69,27 @@ import AyatService from "./ayat.service";
         let ayatFetchingTask = ayatService.getAyats(surahNumber, startingAyat, endingAyat);
 
         ayatFetchingTask.then(x => {
-            let ayatHtmlContent = ``;
-            x.forEach(ayat => ayatHtmlContent += `<p>${ayat.getAyatNumber()} # ${ayat.getArabicText()}</p>`);
-            viewManager.setContentAtAyatArea(ayatHtmlContent);
+            index = 0;
+            ayats = x;
+            processOneByOne();
         });
+    }
+
+    function processOneByOne() {
+        if (index < ayats.length) {
+            let singleAyat = ayats[index];
+            let htmlContent = `<audio src="${singleAyat.getRecitationUrl()}" autoplay id="recitation"></audio>`;
+            htmlContent += `<p>Ayat # ${singleAyat.getAyatNumber()}</p>`;
+            htmlContent += `<p>${singleAyat.getArabicText()}</p>`;
+            htmlContent += `<p>${singleAyat.getEnglishTranslation()}</p>`;
+            viewManager.setContentAtAyatArea(htmlContent);
+            index++;
+
+            let recitationNode = document.getElementById('recitation');
+            recitationNode.addEventListener('ended', processOneByOne);
+        }else{
+            viewManager.setContentAtAyatArea('');
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
