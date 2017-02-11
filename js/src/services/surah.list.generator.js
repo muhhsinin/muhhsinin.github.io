@@ -1,7 +1,7 @@
 /**
  * Created by kawnayeen on 1/22/17.
  */
-import SurahInfo from "./surah.info";
+import SurahInfo from "../businessobject/surah.info";
 
 "use strict";
 export default class SurahListGenerator {

@@ -3,10 +3,10 @@
  */
 "use strict";
 
-import Util from "./util";
-import AyatInfo from "./ayat.info";
+import Util from "../util";
+import AyatInfo from "../businessobject/ayat.info";
 
-export default class AyatService {
+export default class AyatFetcher {
     constructor() {
         this.util = new Util();
     }
