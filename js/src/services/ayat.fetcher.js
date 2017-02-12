@@ -44,7 +44,6 @@ export default class AyatFetcher {
                 resolve(ayats);
             }, 1500);
         });
-
         return awesomePromise;
     }
 }
