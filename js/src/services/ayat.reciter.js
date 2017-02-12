@@ -7,12 +7,15 @@ export default class AyatReciter {
     constructor(viewManager) {
         this.index = 0;
         this.ayats = null;
+        this.surah = null;
         this.viewManager = viewManager;
     }
 
-    reciteAyats(ayats) {
+    reciteAyats(surah, ayats) {
+        this.surah = surah;
         this.ayats = ayats;
         this.index = 0;
+        this.viewManager.hideSelectionArea();
         this.processSingleAyat();
     }
 
@@ -21,13 +24,15 @@ export default class AyatReciter {
             this.reciteSingleAyat();
         } else {
             this.viewManager.setContentAtAyatArea('');
+            this.viewManager.appearSelectionArea();
+            this.viewManager.resetSelectionArea();
         }
     }
 
     reciteSingleAyat() {
         let ayat = this.ayats[this.index];
         let htmlContent = `<audio src="${ayat.getRecitationUrl()}" autoplay id="recitation"></audio>`;
-        htmlContent += `<p>Ayat # ${ayat.getAyatNumber()}</p>`;
+        htmlContent += `<p>${this.surah.englishName}, ayat # ${ayat.getAyatNumber()}</p>`;
         htmlContent += `<p>${ayat.getArabicText()}</p>`;
         htmlContent += `<p>${ayat.getEnglishTranslation()}</p>`;
         this.viewManager.setContentAtAyatArea(htmlContent);

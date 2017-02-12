@@ -12,6 +12,6 @@ export default class AppController {
             selection.getStartingAyat(),
             selection.getEndingAyat()
         );
-        ayatFetchingTask.then(x => this.ayatReciter.reciteAyats(x));
+        ayatFetchingTask.then(x => this.ayatReciter.reciteAyats(selection.getSurahInfo(),x));
     }
 }
