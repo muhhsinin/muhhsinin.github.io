@@ -13,6 +13,7 @@ export default class ViewManager {
         this.startingAyatNode = null;
         this.endingAyatNode = null;
         this.ayatAreaNode = null;
+        this.initialize();
     }
 
     initialize() {
