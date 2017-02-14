@@ -19,7 +19,7 @@
     }));
 
     gulp.task('js', ['test'], () => {
-        browserify('./js/src/app.js')
+        browserify('./js/src/prod/app.js')
             .transform(babelify.configure({presets: ["es2015"]}))
             .bundle()
             .pipe(source('all.js'))
@@ -30,7 +30,7 @@
     });
 
     gulp.task('test', () => {
-        return gulp.src('./js/src/test*.js', {read: false})
+        return gulp.src('./js/src/test/**/**.js', {read: false})
             .pipe(mocha({reporter: 'spec'}));
     });
 
@@ -38,7 +38,7 @@
         'default',
         ['connect', 'js'],
         () => {
-            gulp.watch('./js/src/**/**.js', ['js']);
+            gulp.watch('./js/src/prod/**/**.js', ['js']);
         }
     );
 }());

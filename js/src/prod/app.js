@@ -2,12 +2,12 @@
  * Created by kawnayeen on 1/29/17.
  */
 import DataManager from "./businessobject/data.manager";
-import ViewManager from "./view.manager";
+import ViewManager from "./view/view.manager";
 import SurahListGenerator from "./services/surah.list.generator";
 import AyatSelector from "./services/ayat.selector";
 import AyatFetcher from "./services/ayat.fetcher";
 import AyatReciter from "./services/ayat.reciter";
-import AppController from "./app.controller";
+import AppController from "./controller/app.controller";
 
 (function () {
     "use strict";

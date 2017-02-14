@@ -4,7 +4,7 @@
 "use strict";
 
 import Util from "../util";
-import AyatInfo from "../businessobject/ayat.info";
+import AyatInfo from "../prod/businessobject/ayat.info";
 
 export default class AyatFetcher {
     constructor() {
