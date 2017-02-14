@@ -3,8 +3,8 @@
  */
 "use strict";
 
-import Util from "../util";
-import AyatInfo from "../prod/businessobject/ayat.info";
+import Util from "../misc/util";
+import AyatInfo from "../businessobject/ayat.info";
 
 export default class AyatFetcher {
     constructor() {

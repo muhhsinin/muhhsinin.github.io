@@ -2,7 +2,7 @@
  * Created by kawnayeen on 2/12/17.
  */
 "use strict";
-import Selection from "../prod/businessobject/selection";
+import Selection from "../businessobject/selection";
 
 export default class AyatSelector {
     constructor(viewManager, dataManager, appController) {

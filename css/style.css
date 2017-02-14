@@ -4,6 +4,19 @@
     font-weight: bold;
 }
 
+.arabicText{
+    font-size: 30px;
+    font-family: "sans-serif";
+    font-weight: bold;
+    color: #7f7f7f;
+}
+
+.englishText{
+    font-size: 18px;
+    font-family: "Times New Roman";
+    font-weight: bold;
+}
+
 .hide{
     display: none;
 }

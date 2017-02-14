@@ -21,7 +21,7 @@
     gulp.task('js', ['test'], () => {
         browserify('./js/src/prod/app.js')
             .transform(babelify.configure({presets: ["es2015"]}))
-            .bundle()
+            .bundle().on('error',err=>console.error(err))
             .pipe(source('all.js'))
             .pipe(buffer())
             .pipe(uglify())
@@ -38,7 +38,7 @@
         'default',
         ['connect', 'js'],
         () => {
-            gulp.watch('./js/src/prod/**/**.js', ['js']);
+            gulp.watch('./js/src/**/**.js', ['js']);
         }
     );
 }());
