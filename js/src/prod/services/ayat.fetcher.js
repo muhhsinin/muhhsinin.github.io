@@ -41,7 +41,7 @@ export default class AyatFetcher {
             window.setTimeout(() => {
                 ayats.sort((a, b) => a.getAyatSerial() - b.getAyatSerial());
                 resolve(ayats);
-            }, 1000);
+            }, 1500);
         });
         return awesomePromise;
     }
