@@ -6,17 +6,18 @@
 const recitationHost = 'http://www.everyayah.com/data/Alafasy_64kbps/';
 
 export default class AyatInfo {
-    constructor(surahNumber, ayatNumber) {
+    constructor(surahId, ayatNumber, surahNumber) {
         this.surahNumber = surahNumber;
+        this.surahId = surahId;
         this.ayatNumber = ayatNumber;
-        this.recitationUrl = `${recitationHost}${this.surahNumber}${this.ayatNumber}.mp3`;
+        this.recitationUrl = `${recitationHost}${this.surahId}${this.ayatNumber}.mp3`;
         this.arabicText = null;
         this.englishTranslation = null;
         this.ayatSerial = 0;
     }
 
     getUniqueIdentifier() {
-        return `${this.surahNumber}${this.ayatNumber}`;
+        return `${this.surahId}${this.ayatNumber}`;
     }
 
     getRecitationUrl() {

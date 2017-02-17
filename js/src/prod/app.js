@@ -24,9 +24,9 @@ import AppController from "./controller/app.controller";
         surahListGenerator = new SurahListGenerator(dataManager);
         viewManager = new ViewManager();
         ayatFetcher = new AyatFetcher();
-        ayatReciter = new AyatReciter(viewManager);
-        appController = new AppController(ayatFetcher,ayatReciter);
-        ayatSelector = new AyatSelector(viewManager,dataManager, appController);
+        ayatReciter = new AyatReciter(viewManager, dataManager);
+        appController = new AppController(ayatFetcher, ayatReciter);
+        ayatSelector = new AyatSelector(viewManager, dataManager, appController);
         surahListGenerator.generate();
     }
 

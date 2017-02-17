@@ -29,12 +29,18 @@ export default class DataManager {
 
     findSurahByDisplayName(displayName) {
         if (this.isSurahExistByDisplayName(displayName)) {
-            for (var index = 0; index < this.surahList.length; index++) {
+            for (let index = 0; index < this.surahList.length; index++) {
                 if (this.surahList[index].getDisplayName() === displayName) {
                     return this.surahList[index];
                 }
             }
         } else
             return null;
+    }
+
+    findSurahBySurahNumber(surahNumber) {
+        if (surahNumber < 1 || surahNumber > 114)
+            return null;
+        return this.surahList[surahNumber - 1];
     }
 }

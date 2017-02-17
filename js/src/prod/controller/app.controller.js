@@ -8,10 +8,10 @@ export default class AppController {
     }
 
     startRecitation(selection) {
-        let ayatFetchingTask = this.ayatFetcher.getAyats(selection.getSurahInfo().number,
+        let ayatFetchingTask = this.ayatFetcher.getAyats(selection.getSurahNumber(),
             selection.getStartingAyat(),
             selection.getEndingAyat()
         );
-        ayatFetchingTask.then(x => this.ayatReciter.reciteAyats(selection.getSurahInfo(),x));
+        ayatFetchingTask.then(x => this.ayatReciter.reciteAyats(x));
     }
 }

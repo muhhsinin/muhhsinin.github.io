@@ -4,15 +4,14 @@
 "use strict";
 
 export default class AyatReciter {
-    constructor(viewManager) {
+    constructor(viewManager, dataManager) {
         this.index = 0;
         this.ayats = null;
-        this.surah = null;
         this.viewManager = viewManager;
+        this.dataManager = dataManager;
     }
 
-    reciteAyats(surah, ayats) {
-        this.surah = surah;
+    reciteAyats(ayats) {
         this.ayats = ayats;
         this.index = 0;
         this.viewManager.hideSelectionArea();
@@ -32,10 +31,10 @@ export default class AyatReciter {
     reciteSingleAyat() {
         let ayat = this.ayats[this.index];
         let htmlContent = `<audio src="${ayat.getRecitationUrl()}" autoplay id="recitation"></audio>`;
-        htmlContent += `<p class="englishText">${this.surah.englishName}, ayat # ${ayat.getAyatNumber()}</p>`;
+        let surah = this.dataManager.findSurahBySurahNumber(ayat.surahNumber);
+        htmlContent += `<p class="englishText">${surah.englishName}, ayat # ${ayat.getAyatNumber()}</p>`;
         htmlContent += `<p class="arabicText">${ayat.getArabicText()}</p>`;
         htmlContent += `<p class="englishText">${ayat.getEnglishTranslation()}</p>`;
-        console.log(htmlContent);
         this.viewManager.setContentAtAyatArea(htmlContent);
         this.index++;
         let recitationNode = document.getElementById('recitation');
@@ -45,5 +44,4 @@ export default class AyatReciter {
     isRecitationEnded() {
         return this.ayats == null || this.index >= this.ayats.length;
     }
-
 }

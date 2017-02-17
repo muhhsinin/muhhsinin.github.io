@@ -48,7 +48,7 @@ export default class AyatSelector {
     }
 
     proceedToRecitation() {
-        let selection = new Selection(this.surah, this.viewManager.getStartingAyat(), this.viewManager.getEndingAyat());
+        let selection = new Selection(this.surah.number, this.viewManager.getStartingAyat(), this.viewManager.getEndingAyat());
         this.appController.startRecitation(selection);
     }
 }

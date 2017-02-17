@@ -4,13 +4,13 @@
 "use strict";
 export default class Selection {
     constructor(surahInfo, startAyat, endAyat) {
-        this.surahInfo = surahInfo;
+        this.surahNumber = surahInfo;
         this.startAyat = startAyat;
         this.endAyat = endAyat;
     }
 
-    getSurahInfo() {
-        return this.surahInfo;
+    getSurahNumber() {
+        return this.surahNumber;
     }
 
     getStartingAyat() {

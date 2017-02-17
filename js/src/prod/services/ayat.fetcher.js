@@ -15,7 +15,7 @@ export default class AyatFetcher {
         let surahId = this.util.to3digitString(surahNumber);
         let ayatId = this.util.to3digitString(ayatNumber);
         let ayatUri = `resources/ayat/${surahId}/${surahId}${ayatId}.json`;
-        let ayatInfo = new AyatInfo(surahId, ayatId);
+        let ayatInfo = new AyatInfo(surahId, ayatId, surahNumber);
         let ayatFetchingTask = new Promise((resolve, reject) => {
                 fetch(ayatUri)
                     .then(r => r.json())
