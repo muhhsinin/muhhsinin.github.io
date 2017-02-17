@@ -31,7 +31,7 @@ export default class AyatReciter {
     reciteSingleAyat() {
         let ayat = this.ayats[this.index];
         let htmlContent = `<audio src="${ayat.getRecitationUrl()}" autoplay id="recitation"></audio>`;
-        let surah = this.dataManager.findSurahBySurahNumber(ayat.surahNumber);
+        let surah = this.dataManager.findSurahBySurahNumber(ayat.getSurahNumber());
         htmlContent += `<p class="englishText">${surah.englishName}, ayat # ${ayat.getAyatNumber()}</p>`;
         htmlContent += `<p class="arabicText">${ayat.getArabicText()}</p>`;
         htmlContent += `<p class="englishText">${ayat.getEnglishTranslation()}</p>`;

@@ -8,6 +8,7 @@ import AyatSelector from "./services/ayat.selector";
 import AyatFetcher from "./services/ayat.fetcher";
 import AyatReciter from "./services/ayat.reciter";
 import AppController from "./controller/app.controller";
+import Util from "./misc/util";
 
 (function () {
     "use strict";
@@ -32,5 +33,6 @@ import AppController from "./controller/app.controller";
 
     document.addEventListener('DOMContentLoaded', function () {
         initialize();
+        window.util = new Util();
     });
 }());

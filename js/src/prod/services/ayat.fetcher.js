@@ -3,21 +3,16 @@
  */
 "use strict";
 
-import Util from "../misc/util";
 import AyatInfo from "../businessobject/ayat.info";
 
 export default class AyatFetcher {
     constructor() {
-        this.util = new Util();
     }
 
     getAyat(surahNumber, ayatNumber) {
-        let surahId = this.util.to3digitString(surahNumber);
-        let ayatId = this.util.to3digitString(ayatNumber);
-        let ayatUri = `resources/ayat/${surahId}/${surahId}${ayatId}.json`;
-        let ayatInfo = new AyatInfo(surahId, ayatId, surahNumber);
+        let ayatInfo = new AyatInfo(surahNumber, ayatNumber);
         let ayatFetchingTask = new Promise((resolve, reject) => {
-                fetch(ayatUri)
+                fetch(ayatInfo.getResourceUrl())
                     .then(r => r.json())
                     .then(r => {
                         ayatInfo.setArabicText(r.arabic);

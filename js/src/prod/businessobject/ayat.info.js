@@ -4,20 +4,30 @@
 "use strict";
 
 const recitationHost = 'http://www.everyayah.com/data/Alafasy_64kbps/';
+const resourceHost = 'resources/ayat/';
 
 export default class AyatInfo {
-    constructor(surahId, ayatNumber, surahNumber) {
+    constructor(surahNumber, ayatNumber) {
         this.surahNumber = surahNumber;
-        this.surahId = surahId;
         this.ayatNumber = ayatNumber;
-        this.recitationUrl = `${recitationHost}${this.surahId}${this.ayatNumber}.mp3`;
+        this._surahId = window.util.to3digitString(this.surahNumber);
+        this._ayatId = window.util.to3digitString(this.ayatNumber);
         this.arabicText = null;
         this.englishTranslation = null;
         this.ayatSerial = 0;
+        this.recitationUrl = this.generateRecitationUrl();
+    }
+
+    generateRecitationUrl() {
+        return `${recitationHost}${this.getUniqueIdentifier()}.mp3`;
+    }
+
+    getResourceUrl() {
+        return `${resourceHost}${this._surahId}/${this.getUniqueIdentifier()}.json`;
     }
 
     getUniqueIdentifier() {
-        return `${this.surahId}${this.ayatNumber}`;
+        return `${this._surahId}${this._ayatId}`;
     }
 
     getRecitationUrl() {
@@ -36,11 +46,15 @@ export default class AyatInfo {
         return this.englishTranslation;
     }
 
-    getAyatNumber(){
+    getSurahNumber() {
+        return this.surahNumber;
+    }
+
+    getAyatNumber() {
         return this.ayatNumber;
     }
 
-    getAyatSerial(){
+    getAyatSerial() {
         return this.ayatSerial;
     }
 
@@ -52,7 +66,7 @@ export default class AyatInfo {
         this.englishTranslation = englishTranslation;
     }
 
-    setAyatSerial(ayatSerial){
+    setAyatSerial(ayatSerial) {
         this.ayatSerial = ayatSerial;
     }
 }
