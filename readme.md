@@ -8,7 +8,7 @@ How to Run
 
 External Dependencies
 
-- Node v6.9.4
+- Node v7.5.0
 
 Open terminal in the project directory and run the following command to 
 ```

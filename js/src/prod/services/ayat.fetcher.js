@@ -25,19 +25,23 @@ export default class AyatFetcher {
         return ayatFetchingTask;
     }
 
-    getAyats(surahNumber, startingAyat, endingAyat) {
+    getAyats(playList) {
         let allFetchingTasks = [];
         let ayats = [];
-        for (let i = startingAyat; i <= endingAyat; i++) {
-            allFetchingTasks.push(this.getAyat(surahNumber, i));
-        }
+
+        playList.getSelections().forEach(selection => {
+            for (let i = selection.startAyat; i <= selection.endAyat; i++) {
+                allFetchingTasks.push(this.getAyat(selection.surahNumber, i));
+            }
+        });
+
         allFetchingTasks.forEach(task => task.then(ayat => ayats.push(ayat)));
 
         let awesomePromise = new Promise((resolve, reject) => {
             window.setTimeout(() => {
                 ayats.sort((a, b) => a.getAyatSerial() - b.getAyatSerial());
                 resolve(ayats);
-            }, 1500);
+            }, 1000);
         });
         return awesomePromise;
     }

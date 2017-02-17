@@ -7,11 +7,8 @@ export default class AppController {
         this.ayatReciter = ayatReciter;
     }
 
-    startRecitation(selection) {
-        let ayatFetchingTask = this.ayatFetcher.getAyats(selection.getSurahNumber(),
-            selection.getStartingAyat(),
-            selection.getEndingAyat()
-        );
+    startRecitation(playList) {
+        let ayatFetchingTask = this.ayatFetcher.getAyats(playList);
         ayatFetchingTask.then(x => this.ayatReciter.reciteAyats(x));
     }
 }

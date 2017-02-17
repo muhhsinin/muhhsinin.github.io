@@ -3,6 +3,7 @@
  */
 "use strict";
 import Selection from "../businessobject/selection";
+import PlayList from "../businessobject/play.list";
 
 export default class AyatSelector {
     constructor(viewManager, dataManager, appController) {
@@ -48,7 +49,9 @@ export default class AyatSelector {
     }
 
     proceedToRecitation() {
+        let playList = new PlayList();
         let selection = new Selection(this.surah.number, this.viewManager.getStartingAyat(), this.viewManager.getEndingAyat());
-        this.appController.startRecitation(selection);
+        playList.addSelection(selection);
+        this.appController.startRecitation(playList);
     }
 }

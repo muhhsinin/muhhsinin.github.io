@@ -3,8 +3,8 @@
  */
 "use strict";
 export default class Selection {
-    constructor(surahInfo, startAyat, endAyat) {
-        this.surahNumber = surahInfo;
+    constructor(surahNumber, startAyat, endAyat) {
+        this.surahNumber = surahNumber;
         this.startAyat = startAyat;
         this.endAyat = endAyat;
     }
