@@ -3,7 +3,7 @@
  */
 "use strict";
 
-const recitationHost = 'http://www.everyayah.com/data/Alafasy_64kbps/';
+const recitationHost = 'http://everyayah.com/data/Alafasy_64kbps/';
 const resourceHost = 'resources/ayat/';
 
 export default class AyatInfo {
